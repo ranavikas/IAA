@@ -1,0 +1,1 @@
+These tables contain data that should imported everytime the database changes.  This is testing data for the client to use.

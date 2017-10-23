@@ -1,0 +1,26 @@
+STUDIES
+==========================================================================================
+
+"Study List" should link back to list page.
+
+"New Study" should open in a new tab.
+
+Study should not appear in list as "Active" until user manually clicks save button.  Until then, study should show as "Draft".
+
+When a study is still in Draft mode, there should be an edit option.
+
+Study should open in a new tab.
+
+"Potentials" was as a seperate page.  It needs to be one tab within a whole page.
+
+Product name needs to be text input box.
+
+PARTICIPANTS
+==========================================================================================
+Option for "general tab" should pull from USER_GROUPS table.
+
+Change "Classification" to "IAA Classification"
+
+Hide Address 1 and Address 2 fields.  Don't delete them, just hide them.
+
+For study field, make this a pop-up that selected from existing studies. User does not need to be added as participant to study.  Just link study in PARTICIPANTS table.

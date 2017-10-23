@@ -1,0 +1,148 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `audit`;
+DROP TABLE IF EXISTS `classifications`;
+DROP TABLE IF EXISTS `client_contacts`;
+DROP TABLE IF EXISTS `clients`;
+DROP TABLE IF EXISTS `contact_status`;
+DROP TABLE IF EXISTS `contacts`;
+DROP TABLE IF EXISTS `contacts`;
+DROP TABLE IF EXISTS `education_status`;
+DROP TABLE IF EXISTS `ethnicities`;
+DROP TABLE IF EXISTS `genders`;
+DROP TABLE IF EXISTS `location_contacts`;
+DROP TABLE IF EXISTS `location_types`;
+DROP TABLE IF EXISTS `locations`;
+DROP TABLE IF EXISTS `medical_conditions`;
+DROP TABLE IF EXISTS `occupations`;
+DROP TABLE IF EXISTS `participant_conditions_ug`;
+DROP TABLE IF EXISTS `participants`;
+DROP TABLE IF EXISTS `participant_classifications_autosave`;
+DROP TABLE IF EXISTS `participant_classifications_ug`;
+DROP TABLE IF EXISTS `participant_conditions_autosave`;
+DROP TABLE IF EXISTS `participant_conditions_autosave`;
+DROP TABLE IF EXISTS `participant_notes`;
+DROP TABLE IF EXISTS `participant_occupations_autosave`;
+DROP TABLE IF EXISTS `participant_occupations_ug`;
+DROP TABLE IF EXISTS `participant_photolog_autosave`;
+DROP TABLE IF EXISTS `participants_autosave`;
+DROP TABLE IF EXISTS  participant_usergroup_autosave;
+
+DROP TABLE IF EXISTS `participant_usergroup_ug`;
+DROP TABLE IF EXISTS `schedule`;
+DROP TABLE IF EXISTS `schedule_details`;
+DROP TABLE IF EXISTS `user_assign_role`;
+
+
+DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `product_types`;
+DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `screener_question_answers`;
+DROP TABLE IF EXISTS `screener_questions`;
+DROP TABLE IF EXISTS `search_options`;
+DROP TABLE IF EXISTS `studies`;
+DROP TABLE IF EXISTS `studies_autosave`;
+DROP TABLE IF EXISTS `study_dnq`;
+DROP TABLE IF EXISTS `study_dnq_autosave`;
+DROP TABLE IF EXISTS `study_group_sessions`;
+DROP TABLE IF EXISTS `study_group_sessions_autosave`;
+DROP TABLE IF EXISTS `study_locations`;
+DROP TABLE IF EXISTS `study_locations_autosave`;
+DROP TABLE IF EXISTS `study_status`;
+DROP TABLE IF EXISTS `study_types`;
+DROP TABLE IF EXISTS `study_user_groups`;
+DROP TABLE IF EXISTS `study_user_groups_autosave`;
+DROP TABLE IF EXISTS `transportation_status`;
+DROP TABLE IF EXISTS `user_groups`;
+DROP TABLE IF EXISTS `user_roles`;
+DROP TABLE IF EXISTS `users`;
+
+DROP TABLE IF EXISTS `participant_photolog`;
+DROP TABLE IF EXISTS `screener_answers`;
+DROP TABLE IF EXISTS `screener_question_options`;
+DROP TABLE IF EXISTS `study_participant_status`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `study_screener_questions`;
+
+DROP TABLE IF EXISTS `logins`;
+DROP TABLE IF EXISTS `login_attempts`;
+DROP TABLE IF EXISTS `study_participants`;
+
+DROP VIEW IF EXISTS `studies_view`;
+DROP VIEW IF EXISTS `v_active_users`;
+DROP VIEW IF EXISTS `user_assign_role`;
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `audit`;
+DROP TABLE IF EXISTS `classifications`;
+DROP TABLE IF EXISTS `client_contacts`;
+DROP TABLE IF EXISTS `clients`;
+DROP TABLE IF EXISTS `contact_status`;
+DROP TABLE IF EXISTS `contacts`;
+DROP TABLE IF EXISTS `contacts`;
+DROP TABLE IF EXISTS `education_status`;
+DROP TABLE IF EXISTS `ethnicities`;
+DROP TABLE IF EXISTS `genders`;
+DROP TABLE IF EXISTS `location_contacts`;
+DROP TABLE IF EXISTS `location_types`;
+DROP TABLE IF EXISTS `locations`;
+DROP TABLE IF EXISTS `medical_conditions`;
+DROP TABLE IF EXISTS `occupations`;
+DROP TABLE IF EXISTS `participant_conditions_ug`;
+DROP TABLE IF EXISTS `participants`;
+DROP TABLE IF EXISTS `participant_classifications_autosave`;
+DROP TABLE IF EXISTS `participant_classifications_ug`;
+DROP TABLE IF EXISTS `participant_conditions_autosave`;
+DROP TABLE IF EXISTS `participant_conditions_autosave`;
+DROP TABLE IF EXISTS `participant_notes`;
+DROP TABLE IF EXISTS `participant_occupations_autosave`;
+DROP TABLE IF EXISTS `participant_occupations_ug`;
+DROP TABLE IF EXISTS `participant_photolog_autosave`;
+DROP TABLE IF EXISTS `participants_autosave`;
+DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `product_types`;
+DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `screener_question_answers`;
+DROP TABLE IF EXISTS `screener_questions`;
+DROP TABLE IF EXISTS `search_options`;
+DROP TABLE IF EXISTS `studies`;
+DROP TABLE IF EXISTS `studies_autosave`;
+DROP TABLE IF EXISTS `study_dnq`;
+DROP TABLE IF EXISTS `study_dnq_autosave`;
+DROP TABLE IF EXISTS `study_group_sessions`;
+DROP TABLE IF EXISTS `study_group_sessions_autosave`;
+DROP TABLE IF EXISTS `study_locations`;
+DROP TABLE IF EXISTS `study_locations_autosave`;
+DROP TABLE IF EXISTS `study_status`;
+DROP TABLE IF EXISTS `study_types`;
+DROP TABLE IF EXISTS `study_user_groups`;
+DROP TABLE IF EXISTS `study_user_groups_autosave`;
+DROP TABLE IF EXISTS `transportation_status`;
+DROP TABLE IF EXISTS `user_groups`;
+DROP TABLE IF EXISTS `user_roles`;
+DROP TABLE IF EXISTS `users`;
+
+DROP TABLE IF EXISTS `participant_photolog`;
+
+DROP TABLE IF EXISTS `participant_employers`;
+DROP TABLE IF EXISTS `participant_occupations`;
+
+DROP TABLE IF EXISTS `screener_answers`;
+DROP TABLE IF EXISTS `screener_question_options`;
+DROP TABLE IF EXISTS `study_participant_status`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `study_screener_questions`;
+
+DROP TABLE IF EXISTS `logins`;
+DROP TABLE IF EXISTS `login_attempts`;
+DROP TABLE IF EXISTS `study_participants`;
+
+DROP VIEW IF EXISTS `studies_view`;
+DROP VIEW IF EXISTS `v_active_users`;
+DROP VIEW IF EXISTS `user_assign_role`;
+DROP VIEW IF EXISTS `Clear_login_attempts`;
+DROP VIEW IF EXISTS `vw_participant_payment`;
+DROP VIEW IF EXISTS `vw_participant_tracker`;
+DROP VIEW IF EXISTS `vw_participant_payment`;
+DROP VIEW IF EXISTS `vw_participant_tracker_have`;
+
+DROP TABLE `multi_usergroup`;
