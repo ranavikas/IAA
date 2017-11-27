@@ -20,7 +20,8 @@
 
 				<!-- Add Button -->
 				<a  href="<?php echo site_url("data").'/'.$this->uri->segment(2); ?>/add" class="btn btn-primary btn-sm" style="margin-left:15px;">Add Contacts</a>
-				
+				<a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportContactsTableToCSV('contacts.csv')">Export Contacts</a>
+                              
 				
 				<!-- START Main Content -->
   				<div class="panel-body">
@@ -39,16 +40,16 @@
                        
 					
 					<!-- table -->
-                    <table class="table table-striped table-bordered" id="example" name="medical_conditions_list">
+                    <table class="table table-striped table-bordered" id="contactstable" name="">
 						<thead>
 							<tr>
-								 <th>First Name</th>
+								<th>First Name</th>
                                                                 <th>Last Name</th>
                                                                 <th>Title</th>
                                                                 <th>Email</th>
                                                                 <th>Phone</th>
-                                                                <th>Edit</th>
-								<th>Delete</th>
+                                                                <th class="editclas">Edit</th>
+                                                                <th class="delclas">Delete</th>
                                                         </tr>
                                                 </thead>
                         

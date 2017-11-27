@@ -67,8 +67,13 @@
                                                <textarea class="form-control" name="question_option" id="question_option" placeholder="Textarea" rows="5" ><?php echo set_value('question_option'); ?></textarea>
                                             </div>
                                         </div>
-
-
+                                        <div class="form-group ">
+                                             <label for="question_option" class="col-sm-2 control-label"></label>
+                                           <div class="col-sm-6">
+                                               <input type="checkbox" name="demographics"  <?php if(set_value('demographics') == 1){echo 'checked="checked"';} ?>> Use in demographics 
+                                            </div>
+                                        </div>       
+                                      
                                    </div>
                        
                            </div> 

@@ -73,6 +73,16 @@
 		return $query->num_rows();        
     }
     
+     public function get_screene_questions()
+    {
+		$this->db->select('screener_questions.id, screener_questions.question , screener_questions.question_type');
+		$this->db->from('screener_questions');
+                
+		$this->db->order_by('id', 'Asc');
+		$query = $this->db->get();
+		
+		return $query->result_array(); 	
+    }
     
 
     public function get_records( $search_string=null, $order=null, $order_type='Asc', $limit_start, $limit_end)
@@ -95,6 +105,142 @@
 		$query = $this->db->get();
 		
 		return $query->result_array(); 	
+    }
+    
+    
+    public function get_search_records($posted)
+    {
+           
+                //echo '<pre>';
+                //print_r($posted);
+                //die(); 
+        
+		$this->db->select('*');
+		$this->db->from('vw_participant_search');
+               
+                if($posted['select_screen_question'] != '')
+                {    
+                    $question = $posted['select_screen_question'];
+                    $question_val = explode(',',$question);
+                    
+                    $this->db->where_in("vw_participant_search.screener_question", $question_val);
+                  
+                }
+                
+                if($posted['medical_condition'] != 'null')
+                {    
+                    $medical = $posted['medical_condition'];
+                    $medical_val = explode(',',$medical);
+                    
+                    $this->db->where_in("vw_participant_search.medical_condition", $medical_val);
+                  
+                }
+                
+                
+                if($posted['general'] != 'null')
+                {    
+                    $user_group = $posted['general'];
+                    $user_group_val = explode(',',$user_group);
+                    
+                    $this->db->where_in("vw_participant_search.usergroup_id", $user_group_val);
+                  
+                }
+                
+                if($posted['occupation'] != 'null')
+                {    
+                    $occupation = $posted['occupation'];
+                    $occupation_val = explode(',',$occupation);
+                    
+                    $this->db->where_in("vw_participant_search.occupation_id", $occupation_val);
+                  
+                }
+               
+                if($posted['gender'] != '')
+                {
+                    $this->db->where('vw_participant_search.gender', $posted['gender']);
+                }
+                
+                if($posted['minage'] != '')
+                {
+                    $this->db->where('vw_participant_search.age >=', $posted['minage']);
+                }
+                
+                if($posted['maxage'] != '')
+                {
+                    $this->db->where('vw_participant_search.age <=', $posted['maxage']);
+                }
+                
+                if($posted['edulevel'] != '')
+                {
+                    $this->db->where('vw_participant_search.education', $posted['edulevel']);
+                }
+                
+                if($posted['ethnicity'] != 'undefined' && $posted['ethnicity'] != '' )
+                {
+                     $this->db->where('vw_participant_search.ethnicity', $posted['ethnicity']);
+                }
+                
+                
+                if($posted['employer'] != 'undefined' && $posted['employer'] != '' )
+                {
+                     $this->db->where('vw_participant_search.employer', $posted['employer']);
+                }
+                
+                if($posted['city'] != 'undefined' && $posted['city'] != '' )
+                {
+                     $this->db->where('vw_participant_search.city', $posted['city']);
+                }
+                
+                if($posted['zip'] != 'undefined' && $posted['zip'] != '' )
+                {
+                     $this->db->where('vw_participant_search.zip', $posted['zip']);
+                }
+                
+                
+                if($posted['transport'] != 'undefined' && $posted['transport'] != '' )
+                {
+                     $this->db->where('vw_participant_search.transportation', $posted['transport']);
+                }
+                
+                if($posted['esl'] != 'undefined' && $posted['esl'] != '' )
+                {
+                     $this->db->where('vw_participant_search.esl', $posted['esl']);
+                }
+                
+                if($posted['need_wheelchair'] != 'undefined' && $posted['need_wheelchair'] != '' )
+                {
+                     $this->db->where('vw_participant_search.need_wheelchair', $posted['need_wheelchair']);
+                }
+                
+                
+                if($posted['deceased'] != 'undefined' &&  $posted['deceased'] != '' )
+                {
+                     $this->db->where('vw_participant_search.decreased', $posted['deceased']);
+                }
+                
+                if($posted['do_not_call'] != 'undefined' &&  $posted['do_not_call'] != '' )
+                {
+                     $this->db->where('vw_participant_search.do_not_call', $posted['do_not_call']);
+                }
+                
+                if($posted['do_not_email'] != 'undefined' &&  $posted['do_not_email'] != '' )
+                {
+                     $this->db->where('vw_participant_search.do_not_email', $posted['do_not_email']);
+                }
+              
+                
+                if($posted['participant_classfication'] != 'undefined' && $posted['participant_classfication'] != '' )
+                {
+                     $this->db->where('vw_participant_search.classification', $posted['participant_classfication']);
+                }
+                
+                $this->db->order_by('participant_id', 'Asc');
+                
+		
+		$query = $this->db->get();
+		
+                //echo $this->db->last_query();
+		return $query->result_array(); 
     }
     
     

@@ -26,7 +26,7 @@
                           ?>
                                         
                             <input type="hidden" name="study_id" value="<?php echo $study_id;?>">           
-                        <table class="table table-striped table-bordered dataTable" id="example" name="study">
+                        <table class="table table-striped table-bordered dataTable" id="screenerquestion" name="study">
                             <thead>
                                     <tr>
                                         <th></th>
@@ -66,3 +66,6 @@
 		  </div>
 		</div>
     </div>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="<?php echo ASSET_PATH;?>vendors/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo ASSET_PATH;?>js/tables.js"></script>

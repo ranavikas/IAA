@@ -7,7 +7,7 @@
 
 			<!--<div class="content-box-large">-->
 			<div class="panel panel-default" id="headings">
-				<div class="panel-heading"><h3>Contacts</h3></div>
+				<div class="panel-heading"><h3>Clients</h3></div>
 				<nav class="navbar navbar-dark stylish-color">
 					<ol class="breadcrumb">
 						
@@ -18,7 +18,11 @@
 
 				<!-- Add Button -->
 				<a  href="<?php echo site_url('data/').$this->uri->segment(2); ?>/update" class="btn btn-primary btn-sm" style="margin-left:15px;">Add Clients</a>
-				<!-- START Main Content -->
+				 <a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportClientsTableToCSV('clients.csv')">Export Clients</a>
+                              
+                                
+                                
+                                <!-- START Main Content -->
 				<div class="panel-body">
 
 					<!-- Flash Message -->
@@ -35,7 +39,7 @@
 
 					
 					<!-- table -->
-					<table class="table table-striped table-bordered" id="example" name="medical_conditions_list">
+					<table class="table table-striped table-bordered" id="clientstable" name="">
 						<thead>
 							<tr>
 								<th></th>

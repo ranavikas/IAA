@@ -20,7 +20,8 @@
 
 				<!-- Add Button -->
 				<a  href="<?php echo site_url("data").'/'.$this->uri->segment(2); ?>/add" class="btn btn-primary btn-sm" style="margin-left:15px;">Add Ethnicity</a>
-				
+				 <a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportEthnicityTableToCSV('ethnicity.csv')">Export Ethnicity</a>
+                              
 				
 				<!-- START Main Content -->
   				<div class="panel-body">
@@ -39,7 +40,7 @@
                        
 					
 					<!-- table -->
-                    <table class="table table-striped table-bordered" id="example">
+                    <table class="table table-striped table-bordered" id="ethnicitytable">
 						<thead>
 							<tr>
 								<th>Ethnicity</th>

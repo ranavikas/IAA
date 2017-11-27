@@ -67,7 +67,12 @@
                                                <textarea class="form-control" name="question_option" id="question_option" placeholder="Textarea" rows="5" <?php if($record[0]['question_type'] == 3) {?> readonly  <?php } ?> ><?php echo $question_opt; ?></textarea>
                                             </div>
                                         </div>
-
+                                       <div class="form-group ">
+                                             <label for="question_option" class="col-sm-2 control-label"></label>
+                                           <div class="col-sm-6">
+                                               <input type="checkbox" name="demographics"  <?php if($record[0]['demographic'] == 1){echo 'checked="checked"';} ?>> Use in demographics 
+                                            </div>
+                                        </div>
 
                                    </div>
                        

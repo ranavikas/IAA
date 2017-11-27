@@ -174,6 +174,22 @@
         
      
      
+     $('.add_field_btn').click(function(){
+  
+  	var checked = []
+  	$("input[name='participant_search[]']:checked").each(function ()
+  	{
+             checked.push(parseInt($(this).val()));
+  	});
+   
+    	$.ajax({url:"<?php echo BASE_URL?>/participants/participant_filter_select?AddFieldIds="+checked,cache:false,success:function(result){
+            $(".ParticipantSearchField").html(result);
+            document.getElementById('searchfields').style.display='none';
+    	}});
+
+   });
+     
+     
      $(document).ready(function() {
      	
      	$('.user_group_select').multiselect({
@@ -184,6 +200,20 @@
      		maxHeight: 400,
      		dropUp: false
      	});
+        
+        $('.multi-select').multiselect({
+     		enableFiltering: true,
+     		includeSelectAllOption: true,
+     		maxHeight: 400,
+     		dropUp: false
+     	});
+        
+        $('.deleter').on('click', function(){
+            $(this).closest('div.form-group').remove();
+          })
+        
+        
+        
      	
      	
      	$('.participnats').click(function() {
@@ -288,6 +318,7 @@
 
    });
    
+   
    $('.updateGroup').click(function(){
   	
   	var checked = []
@@ -308,6 +339,19 @@
    });
   
   $('.editmodalLinkStudy').click(function(){
+  	
+  	var participantId = '';
+  	participantId = $("#participantId").val();
+  	
+  	
+  	$.ajax({url:"<?php echo BASE_URL?>/studies/selected_study?participantIds="+participantId,cache:false,success:function(result){
+
+  		$(".modal-content-study").html(result);
+  	}});
+
+  });
+  
+  $('.addSearchFields').click(function(){
   	
   	var participantId = '';
   	participantId = $("#participantId").val();
@@ -503,6 +547,51 @@
   	
   });  
 //end of scheduled tab
+
+ //for demographic tab
+ 
+   $('.usergroupdemographic').click(function(){
+  	
+  	var usergroupId =$(this).attr('data-id');
+  	var groupname =$(this).attr('data-group');
+  	var groupparticipnat =$(this).attr('data-participant');
+  	var screenparticipant =$(this).attr('data-screen');
+  	
+  	$("#dgroupname").html(groupname);
+  	$("#dgroupid").html(usergroupId);
+  	$("#dgroupparti").html(groupparticipnat);
+         $(".screen").html(screenparticipant);
+
+  	$.ajax({url:"<?php echo BASE_URL?>/studies/usergroup_demographic?usergroupp="+usergroupId,cache:false,success:function(result){
+  		
+  		$("#usergroup_demographic_table").html(result);
+  	}});
+
+  });  
+  
+  
+  
+  $(document).ready(function() {
+
+  	var usergroupId =$(".usergroupdemographic").first().attr('data-id');
+  	var groupname =$(".usergroupdemographic").first().attr('data-group');
+  	var groupparticipnat =$(".usergroupdemographic").first().attr('data-participant');
+        var screenparticipant =$(".usergroupdemographic").first().attr('data-screen');
+
+  	$("#dgroupname").html(groupname);
+  	$("#dgroupparti").html(groupparticipnat);
+  	$("#dgroupid").html(usergroupId);
+        $(".screen").html(screenparticipant);
+  	$.ajax({url:"<?php echo BASE_URL?>/studies/usergroup_demographic?usergroupp="+usergroupId,cache:false,success:function(result){
+
+  		$("#usergroup_demographic_table").html(result);
+  	}});
+  	
+  	
+  });  
+//end of scheduled tab
+
+
 
 //for DNQ tab
    $('.usergroupdnq').click(function(){
@@ -755,30 +844,299 @@
         downloadCSV(csv.join("\n"), filename);
     } 
     
+    function exportDemographicTableToCSV(filename) {
+        //$(".schedule-export").css("display" , "block");
+        // $(".particpnatt").css("display" , "block");
+        
+        var csv = [];
+        var rows = document.getElementById("demographicexportprintDiv").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++) 
+                row.push(cols[j].innerText);
+
+            csv.push(row.join(","));        
+        }
+       // $(".statuss").css("display" , "none");
+       // $(".particpnatt").css("display" , "none");
+       // $(".schedule-export").css("display" , "none");
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
     
-         function exportParticipantTableToCSV(filename) {
-            //$(".schedule-export").css("display" , "block");
-            // $(".particpnatt").css("display" , "block");
+    
+    function exportParticipantTableToCSV(filename) {
+       //$(".schedule-export").css("display" , "block");
+       // $(".particpnatt").css("display" , "block");
 
-            var csv = [];
-            var rows = document.getElementById("participantcsvDiv").querySelectorAll("table tr");
+       var csv = [];
+       var rows = document.getElementById("participantcsvDiv").querySelectorAll("table tr");
 
-            for (var i = 0; i < rows.length; i++) {
-                var row = [], cols = rows[i].querySelectorAll("td, th");
+       for (var i = 0; i < rows.length; i++) {
+           var row = [], cols = rows[i].querySelectorAll("td, th");
 
-                for (var j = 0; j < cols.length; j++) 
-                    row.push(cols[j].innerText);
+           for (var j = 0; j < cols.length; j++) 
+               row.push(cols[j].innerText);
 
-                csv.push(row.join(","));        
-            }
-           // $(".statuss").css("display" , "none");
-           // $(".particpnatt").css("display" , "none");
-            //$(".schedule-export").css("display" , "none");
-            // Download CSV file
-            downloadCSV(csv.join("\n"), filename);
-        } 
+           csv.push(row.join(","));        
+       }
+      // $(".statuss").css("display" , "none");
+      // $(".particpnatt").css("display" , "none");
+       //$(".schedule-export").css("display" , "none");
+       // Download CSV file
+       downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    function exportContactsTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("contactstable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete')
+                row.push(cols[j].innerText);
+                
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    function exportClientsTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("clientstable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete')
+                row.push(cols[j].innerText);
+                
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    function exportEthnicityTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("ethnicitytable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete')
+                row.push(cols[j].innerText);
+                
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
     
     
+    function exportGenderTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("gendertable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete')
+                row.push(cols[j].innerText);
+                
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    
+    function exportLocationTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("locationtable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    function exportMedicalTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("medicaltable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    function exportOccupationTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("occupationtable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+    function exportClassificationTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("classificationtable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    
+    
+    function exportProductTypeTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("producttypetable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+    
+    function exportStudyTypeTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("studytypetable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
+    function exportQuestionTableToCSV(filename) 
+    {
+        var csv = [];
+        var rows = document.getElementById("quesiontable").querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++)
+            {
+                if(cols[j].innerText != 'Edit' && cols[j].innerText != 'Delete'){
+                    
+                    var str=cols[j].innerText;
+                    var str2=   str.replace(",", "");
+                    row.push(str2);
+                
+                }
+            }        
+            csv.push(row.join(","));        
+        }
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    } 
     </script>
     
 </body>

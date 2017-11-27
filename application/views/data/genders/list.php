@@ -20,7 +20,8 @@
 
 				<!-- Add Button -->
 				<a  href="<?php echo site_url("data").'/'.$this->uri->segment(2); ?>/add" class="btn btn-primary btn-sm" style="margin-left:15px;">Add Genders</a>
-				
+				<a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportGenderTableToCSV('gender.csv')">Export Genders</a>
+                              
 				
 				<!-- START Main Content -->
   				<div class="panel-body">
@@ -39,7 +40,7 @@
                        
 					
 					<!-- table -->
-                    <table class="table table-striped table-bordered" id="example" name="medical_conditions_list">
+                    <table class="table table-striped table-bordered" id="gendertable" name="">
 						<thead>
 							<tr>
 								<th>Gender</th>

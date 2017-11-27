@@ -275,6 +275,26 @@
 		return $query->result_array(); 	
     }
     
+    public function get_usergroup_demographic( $user_group_id)
+    {
+	    
+		$this->db->select('participants.participant_id, participants.firstname , participants.middlename ,participants.lastname ,participants.age ,participants.employer ,participants.classification, genders.gender ,  ethnicities.ethnicity ,occupations.occupation , study_participant_status.status ,study_participants.participant_status as study_participant_status');
+		$this->db->from('study_participants');
+                $this->db->join('participants', 'study_participants.participant_id = participants.participant_id', 'join');
+                $this->db->join('genders', 'participants.gender = genders.gender_id', 'left');
+                $this->db->join('ethnicities', 'participants.ethnicity = ethnicities.ethnicity_id', 'left');
+                $this->db->join('occupations', 'participants.occupation = occupations.id', 'left');
+                $this->db->join('study_participant_status', 'study_participants.participant_status = study_participant_status.id', 'left');
+                $this->db->where('study_participants.study_user_group', $user_group_id);
+                $this->db->where_not_in('study_participants.participant_status', array('7'));   
+		$this->db->order_by('participant_id', 'Asc');
+		
+                
+		$query = $this->db->get();
+		
+		return $query->result_array(); 	
+    }
+    
     public function get_usergroup_dnq( $user_group_id)
     {
 	    
@@ -312,6 +332,21 @@
 		return $query->result_array(); 	
     }
     
+    
+    public function get_usergroup_deomgraphic_questions( $user_group_id)
+    {
+	    
+		$this->db->select('screener_questions.id , screener_questions.question, screener_questions.question_type');
+		$this->db->from('study_screener_questions');
+                $this->db->join('screener_questions', 'study_screener_questions.screener_question = screener_questions.id', 'join');
+                $this->db->where('screener_questions.demographic', 1);
+                $this->db->where('study_screener_questions.study_user_group', $user_group_id);
+		$this->db->order_by('screener_questions.id', 'Asc');
+	
+		$query = $this->db->get();
+		
+		return $query->result_array(); 	
+    }
     
     public function get_question_option($question_id , $question_type , $participant_id , $group_id)
     {
@@ -1252,8 +1287,9 @@
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
+	
     /**
-    * Store the new user into the database
+    * Store the new study into the database
     * @param array $data - associative array with data to store
     * @return boolean 
     */
@@ -1755,7 +1791,7 @@
                     {
                         $this->db->where('study_user_group',  $groupId);
                         $this->db->where('participant_id',  $participantIds[$i]);
-                         $success = $this->db->update('study_participants',array('participant_status' => '6')); 
+                         $success = $this->db->update('study_participants',array('participant_status' => '8')); 
                     } 
                  
                 }
@@ -2982,6 +3018,57 @@
 
             return $query->num_rows(); 
 	}
+        
+        
+        
+        function study_number_exist($study_number)
+        {
+	$this->db->where('study_number_manual', $study_number);
+        $query = $this->db->get('studies');
+        // echo $this->db->last_query();
+        return $query->num_rows();
+		
+        }
+		
+		
+		
+	/**********************************************************************
+    * Grabs content for HandsOnTable
+	* Called by HandsOnTable
+	* @study_id int
+    * @return array 
+	**********************************************************************/
+	public function get_tracker($study_id)
+	{
+        $this->db->select('*');
+        $this->db->from('study_tracker');
+        $this->db->where('study_id', $study_id);
+        $query = $this->db->get();
+		
+		return $query->result_array(); 	
+	}
+	
+	
+	/**********************************************************************
+    * Updates tracker tab data
+	* Called by HandsOnTable
+	* @study_id int
+    * @matrix string - stringified objects from HandsOnTable
+    * @return int 
+	**********************************************************************/
+	public function update_tracker($study_id, $matrix)
+	{
+		$now = date("Y-m-d H:i:s");
+		$data = array('matrix_csv' => $matrix, 'last_modified' => $now);
+		
+		$this->db->where('study_id', $study_id);
+		$this->db->update('study_tracker', $data); 
+				
+		return $this->db->affected_rows();
+	}
+	
+	
+
 	
 }
 ?>	

@@ -7,7 +7,7 @@ class Login extends MY_Controller{
         parent::__construct();
         $this->load->helper(array('form','url','cookie','security'));
         $this->load->library(array('session','form_validation'));
-		$this->load->model(array('User_model','Login_attempts_model','Sendmail_model','system/Email_template_model'));
+	$this->load->model(array('User_model','Login_attempts_model','Sendmail_model','system/Email_template_model'));
     }
 	/**
 	* Function for display login page

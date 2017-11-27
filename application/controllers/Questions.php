@@ -95,18 +95,20 @@ class Questions extends CI_Controller {
             if ($this->form_validation->run())
             {
                 
+                $demographic_value = isset($_POST['demographics']) ? 1 : 0;
                 $question_opt = $this->input->post('question_option');
                 $question_opt=preg_replace('/\s+/', '-', $question_opt);
                 $question_option = explode("-", $question_opt);
            
       
-                $data_to_store = array(
+                 $data_to_store = array(
                             'question' => $this->input->post('question'),
                             'question_type' => $this->input->post('question_type'),
+                            'demographic' => $demographic_value,
                             'last_modified' =>  date('Y-m-d H:i:s')
                     );
                 
-                
+             
                 //if the insert has returned true then we show the flash message
                 $last_insert_id = $this->Questions_model->store_record($data_to_store , $question_option);
                 if($last_insert_id>0){  
@@ -155,6 +157,8 @@ class Questions extends CI_Controller {
             if ($this->form_validation->run())
             {
                 
+                $demographic_value = isset($_POST['demographics']) ? 1 : 0;
+                
                 $question_opt = $this->input->post('question_option');
                 $question_opt=preg_replace('/\s+/', '-', $question_opt);
                 $question_option = explode("-", $question_opt);
@@ -163,10 +167,11 @@ class Questions extends CI_Controller {
                 $data_to_store = array(
                             'question' => $this->input->post('question'),
                             'question_type' => $this->input->post('question_type'),
+                            'demographic' => $demographic_value,
                             'last_modified' =>  date('Y-m-d H:i:s')
                     );
                 
-                
+         
                 //if the insert has returned true then we show the flash message
                 $last_insert_id = $this->Questions_model->store_record($data_to_store , $question_option);
                 if($last_insert_id>0){  
@@ -187,7 +192,7 @@ class Questions extends CI_Controller {
             $data['study_id'] =  $this->input->get('study_id');    
                 
             $data['main_content'] = 'studies/questions/add_question';
-            $this->load->view('includes/template_model', $data);   
+            $this->load->view('includes/template_without_footer', $data);   
     }   
     
     /**
@@ -218,6 +223,7 @@ class Questions extends CI_Controller {
             //if the form has passed through the validation
             if ($this->form_validation->run())
             {
+                $demographic_value = isset($_POST['demographics']) ? 1 : 0;
                 $question_opt = $this->input->post('question_option');
                 $question_opt=preg_replace('/\s+/', '-', $question_opt);
                 $question_option = explode("-", $question_opt);
@@ -226,6 +232,7 @@ class Questions extends CI_Controller {
                 $data_to_store = array(
                             'question' => $this->input->post('question'),
                             'question_type' => $this->input->post('question_type'),
+                            'demographic' => $demographic_value,
                             'last_modified' =>  date('Y-m-d H:i:s')
                     );
                 

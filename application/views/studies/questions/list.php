@@ -20,7 +20,8 @@
 
 				<!-- Add Button -->
 				<a  href="<?php echo site_url("questions"); ?>/add" class="btn btn-primary btn-sm" style="margin-left:15px;">Add Questions</a>
-				
+				<a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportQuestionTableToCSV('question.csv')">Export Questions</a>
+                              
 				
 				<!-- START Main Content -->
   				<div class="panel-body">
@@ -39,7 +40,7 @@
                        
 					
 					<!-- table -->
-                    <table class="table table-striped table-bordered" id="example" name="questioneer">
+                    <table class="table table-striped table-bordered" id="quesiontable" name="questioneer">
 						<thead>
 							<tr>
 								<th>Question</th>

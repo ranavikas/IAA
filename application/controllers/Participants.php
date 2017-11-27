@@ -73,6 +73,51 @@ class Participants extends CI_Controller {
 
     }//index
 	
+    
+      /**
+    * Load the main view with all the current model model's data.
+    * @return void
+    */
+    public function search()
+    {
+        
+        $data['user_groups_rec'] = $this->Participants_model->get_user_group();
+	$data['medical_condition_rec'] = $this->Participants_model->get_medical_condition();
+        $data['occupation_rec'] = $this->Participants_model->get_occupation();
+        $data['gender_rec'] = $this->Participants_model->get_gender();
+        $data['edu_level_rec'] = $this->Participants_model->get_education_level(); 
+        $data['records'] = $this->Participants_model->get_screene_questions(); 
+        
+	//load the view
+        $data['main_content'] = 'participants/search';
+        $this->load->view('includes/template', $data);  
+
+    }//index
+ 
+    public function search_record()
+    {
+       
+        $data['records'] = $this->Participants_model->get_search_records($_POST);  
+       
+	//load the view
+        $data['main_content'] = 'participants/search_list';
+        $this->load->view('includes/template_potential', $data);  
+    }//index
+    
+    public function participant_filter_select()
+    {
+       
+        $data['ethnicity_rec'] = $this->Participants_model->get_ethnicity();
+         $data['parti_employer_rec'] = $this->Participants_model->get_parti_employer();
+         $data['classification_rec'] = $this->Participants_model->get_classification();
+            
+        $data['filter_id']  = $this->input->get('AddFieldIds'); 
+         
+	//load the view
+        $data['main_content'] = 'participants/participant_filter_type';
+        $this->load->view('includes/template_potential', $data);  
+
+    }//index
 	
 	
     public function add()

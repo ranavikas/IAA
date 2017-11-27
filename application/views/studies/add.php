@@ -35,14 +35,6 @@
   			<!--<div class="content-box-large">-->
 			<div class="panel panel-default" id="headings">
                            <div class="panel-heading"><h3>Add Study</h3></div>
-				<!--<nav class="navbar navbar-dark stylish-color">
-					<ol class="breadcrumb">
-						
-						<li class="breadcrumb-item"><a href="<?php echo site_url($this->uri->segment(1)); ?>"><?php echo ucfirst($this->uri->segment(1));?></a></li>
-						<li class="breadcrumb-item active"><?php echo ucfirst($this->uri->segment(2));?></li>
-					</ol>
-				</nav> -->
-                           
 				
   				<div class="panel-body">
 				
@@ -60,7 +52,7 @@
                                  
                         <?php
                           //form data
-                          $attributes = array('class' => 'form-horizontal', 'id' => 'addeditstudy' , 'enctype' => 'multipart/form-data');
+                          $attributes = array('class' => 'form-horizontal', 'id' => 'addeditstudy' , 'enctype' => 'multipart/form-data' ,'onkeypress'=> 'return event.keyCode != 13;');
 
                           //form validation
                           echo validation_errors();
@@ -71,9 +63,15 @@
                                   <div class="panel-body">
                                       <div class="form-group ">
                                           <label for="gender" class="col-sm-4 control-label">Study No</label>
-                                           <div class="col-sm-3"> 
-                                          <?php echo $max_study_id;?>
-                                          <input type="hidden" value="<?php echo $max_study_id;?>" name="study_number">
+                                           <div class="col-sm-4"> 
+                                          <?php  
+                                               $study_number_default  =  date("Y").$max_study_id;
+                                          ?>
+                                             <?php if($study_number_manual == '') { $study_number_manual = set_value('study_number_manual');} ?>  
+                                               
+                                             <input type="text" class="form-control" value="<?php echo $study_number_manual; ?>" name="study_number_manual" id="study_number_manual"> 
+                                            <input type="hidden" class="form-control" value="<?php echo $study_number_default;?>" name="study_number_default" id="study_number_default"> 
+                                            <input type="hidden" value="<?php echo $max_study_id;?>" name="study_number" id="study_number">
                                            </div>
                                        </div>
                                          <div class="form-group ">
@@ -120,7 +118,7 @@
                                              <option value="other">Other</option>
                                            </select> 
                                              <br>
-                                             <div id="additional_product" style="display:none;" style="display:none;">
+                                             <div id="additional_product" style="display:none;" >
                                                     <input type="text" class="form-control" placeholder="Enter product name..." value="<?php echo set_value('product_name_other'); ?>" id="product_name_other" name="product_name_other" >
                                             </div> 
                                          </div>
@@ -209,9 +207,10 @@
                                           <label for="focus_vision" class="col-sm-4 control-label">Focus Vision</label>
                                            <div class="col-sm-4"> 
                                           <select name="focus_vision" id="focus_vision" class="form-control">
+                                              <option value="" selected>Select Focus Vision</option>
                                             <?php 
                                             
-                                                $focus_rec = array('1'=>'Yes' , '0'=>'No');
+                                                $focus_rec = array('2'=>'Yes' , '1'=>'No');
                                                 foreach($focus_rec as $key=>$val) {
 
                                                      if ($key == $focus_vision)
@@ -231,6 +230,7 @@
                                           <label for="recruiter" class="col-sm-4 control-label">Recruiter</label>
                                            <div class="col-sm-6"> 
                                           <select name="recruiter" id="recruiter" class="form-control">
+                                            <option value="" selected>Select Recruiter </option>
                                             <?php         
                                                 foreach($recruiter_rec as $row) {
 
@@ -249,6 +249,7 @@
                                           <label for="gender" class="col-sm-4 control-label">Lead</label>
                                            <div class="col-sm-6"> 
                                           <select name="lead" id="lead" class="form-control">
+                                              <option value="" selected>Select lead </option>
                                             <?php         
                                                 foreach($lead_rec as $row) {
 
@@ -267,6 +268,7 @@
                                           <label for="gender" class="col-sm-4 control-label">Datalogger</label>
                                            <div class="col-sm-6"> 
                                           <select name="datalogger" id="datalogger" class="form-control">
+                                               <option value="" selected>Select Datalogger </option>
                                             <?php         
                                                 foreach($datalogger_rec as $row) {
 
@@ -285,6 +287,7 @@
                                           <label for="av" class="col-sm-4 control-label">AV</label>
                                            <div class="col-sm-6"> 
                                           <select name="av" id="av" class="form-control">
+                                               <option value="" selected>Select AV </option>
                                             <?php         
                                                foreach($av_rec as $row) {
 
@@ -481,8 +484,10 @@
                                                     </div> 
                                                      <div class="row">
                                                           <div class="form-group ">
-                                                                <label for="focus_vision" class="col-sm-2 control-label">Location</label>
-                                                               <div class="col-sm-3"> 
+                                                                <label for="focus_vision" class="col-sm-2 control-label">Select Location</label>
+                                                               <div class="col-sm-3">
+                                                                     <input type="text" class="form-control" id="myInput1" onkeyup="myFunction1()" placeholder="Search.." title="Type in a name">                                                 
+                                                                    
                                                                   <div id="" style="overflow-y: scroll; height:200px; border:1px solid #ddd;">
                                                                         <table id="myTable1" class="table table-striped table-bordered" >
 
@@ -579,12 +584,16 @@
             $.post('<?php echo site_url('studies/autosave/'); ?>', $('#addeditstudy').serialize(), function (data) {
 
                     if(data !== ''){
-                    var dataa = $.parseJSON(data);
-                    $.each( dataa, function( key, vale ) {
-                    //console.log(key + ":" + vale);
-                    $('#user_group_id_'+key).val(vale);
-                    });
-                }
+                        var dataa = $.parseJSON(data);
+                        $.each( dataa, function( key, vale ) {
+                        //console.log(key + ":" + vale);
+                        $('#user_group_id_'+key).val(vale);
+                        });
+                    }
+                
+                   
+                
+                
             });
          }, 10000);
 
@@ -648,6 +657,24 @@
        input = document.getElementById("myInput");
        filter = input.value.toUpperCase();
        table = document.getElementById("myTable");
+       tr = table.getElementsByTagName("tr");
+       for (i = 0; i < tr.length; i++) {
+         td = tr[i].getElementsByTagName("td")[0];
+         if (td) {
+           if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+             tr[i].style.display = "";
+           } else {
+             tr[i].style.display = "none";
+           }
+         }       
+       }
+    }
+    
+    function myFunction1() {
+       var input, filter, table, tr, td, i;
+       input = document.getElementById("myInput1");
+       filter = input.value.toUpperCase();
+       table = document.getElementById("myTable1");
        tr = table.getElementsByTagName("tr");
        for (i = 0; i < tr.length; i++) {
          td = tr[i].getElementsByTagName("td")[0];
@@ -735,6 +762,23 @@
          });
         
         
+       $(document).on('change',  '#start_date', function(){
+       
+       var study_number_manual = $("#study_number_manual").val();
+        var study_number = $("#study_number").val();
+        var dateval = $(this).val();
+        
+        if(study_number_manual == ''){
+            var dval = dateval.split('-');
+            var overide_snumber = dval[0]+study_number;
+             $("#study_number_manual").val(overide_snumber);
+        }
+        
+        
+        
+       });
+       
+       
        
 
         //get clint contact info

@@ -52,7 +52,7 @@
                                   
                            <?php
                                     //form data
-                                    $attributes = array('class' => 'form-horizontal', 'id' => 'addeditstudy' , 'enctype' => 'multipart/form-data');
+                                    $attributes = array('class' => 'form-horizontal', 'id' => 'addeditstudy' , 'enctype' => 'multipart/form-data' ,'onkeypress'=> 'return event.keyCode != 13;');
 
                                     //form validation
                                     echo validation_errors();

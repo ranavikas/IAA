@@ -287,7 +287,7 @@
 
                                             <div class="col-sm-3">
                                                  <label for="ext" class=" control-label" style="float: left; margin-right: 10px;">Ext</label>
-                                                <input type="text" class="form-control" id="phone_ext" name="phone_ext" value="<?php echo $phone_ext; ?>" placeholder="EXT" style="width: 70px;" >                                                                
+                                                <input type="text" class="form-control" id="phone_ext" name="phone_ext" value="<?php echo $phone_ext; ?>" placeholder="EXT" style="width: 60px;" >                                                                
                                             </div>
                                             <div class="checkbox col-sm-3">
                                               <label>
@@ -312,7 +312,7 @@
                                           
                                             <div class="col-sm-3">
                                               <label for="firstname" class=" control-label" style="float: left; margin-right: 10px;">Ext</label>
-                                              <input type="text" class="form-control" id="alt_phone_ext" name="alt_phone_ext" value="<?php echo $alternate_phone_ext; ?>" style="width: 70px;" >                                                                 
+                                              <input type="text" class="form-control" id="alt_phone_ext" name="alt_phone_ext" value="<?php echo $alternate_phone_ext; ?>" style="width: 60px;" >                                                                 
                                           </div>
                                           
                                           <div class="checkbox col-sm-3">

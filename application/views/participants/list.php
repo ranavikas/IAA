@@ -18,7 +18,9 @@
 
 				<!-- Add Button -->
 				<a  href="<?php echo site_url().$this->uri->segment(1); ?>/add" class="btn btn-primary  btn-sm" style="margin-left:15px;">Add Participant</a>
-				<a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportParticipantTableToCSV('participant.csv')">Export Participant</a>
+				<a  href="<?php echo site_url().$this->uri->segment(1); ?>/search" class="btn btn-primary  btn-sm" style="margin-left:15px;">Participant Search</a>
+				
+                                <a class="btn btn-primary btn-sm " style="margin-right:15px; float:right;" onclick="exportParticipantTableToCSV('participant.csv')">Export Participant</a>
                                 <a href="#myModal" data-toggle="modal" data-target="#myModal" id="selected_study"  class="btn btn-primary btn-sm modalLinkStudy" style="margin-right:15px; float:right;" disabled>Add Selected to Study</a>
 				
 				
@@ -39,10 +41,10 @@
                        
 					
 					<!-- table -->
-                    <table class="table table-striped table-bordered" id="example" name="medical_conditions_list">
+                    <table class="table table-striped table-bordered table-compact table-hover table-order-column " id="example1" name="medical_conditions_list">
 						<thead>
 							<tr>
-                                                                <th></th>
+                                                                <th class="participnats">  <input type="checkbox" id="checkAll">  </th>
 								<th>First Name</th>
                                                                 <th>MI</th>
                                                                 <th>Last Name</th>
@@ -286,3 +288,15 @@ button.close {
 }
 
 </style>
+
+ <script src="https://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+
+ 
+ $(document).ready(function() {
+          $("#checkAll").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+            });
+    });
+ 
+ </script>

@@ -177,15 +177,25 @@
                                        <?php $this->load->view('studies/detail'); ?>
                                       </div> 
                                      <div class="tab-pane " id="tab2<?php echo $study_id;?>"> 
-                                        <?php $this->load->view('studies/potential'); ?>
+                                        <?php $this->load->view('studies/potential_hot'); ?>
                                       </div> 
                                      <div class="tab-pane " id="tab3<?php echo $study_id;?>"> 
                                          <?php $this->load->view('studies/scheduled'); ?>
                                       </div> 
+                                     
+                                      
                                       <div class="tab-pane " id="tab4<?php echo $study_id;?>"> 
                                          <?php $this->load->view('studies/schedulee'); ?>
                                       </div>
-                                     <div class="tab-pane " id="tab7<?php echo $study_id;?>"> 
+                                     <div class="tab-pane " id="tab5<?php echo $study_id;?>"> 
+                                         <?php $this->load->view('studies/demographic'); ?>
+                                      </div> 
+									  
+                                     <div class="tab-pane " id="tab6<?php echo $study_id;?>"> 
+                                         <?php $this->load->view('studies/tracker'); ?>
+                                      </div> 
+
+									  <div class="tab-pane " id="tab7<?php echo $study_id;?>"> 
                                          
                                          <?php $this->load->view('studies/dnq'); ?>
                                       </div> 

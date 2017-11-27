@@ -4,9 +4,30 @@
                 border-color: #4cae4c;
     }
     </style>
+	
+<script src="http://docs.handsontable.com/pro/bower_components/handsontable-pro/dist/handsontable.full.min.js"></script>
+
+	<script>
+	
+	var data = [
+	  ["", "", "", "", ""],
+	  ["", "", "", "", ""],
+	  ["", "", "", "", ""],
+	  ["", "", "", "", ""],
+	];
+
+	var container = document.getElementById('example');
+	var hot = new Handsontable(container, {
+	  data: data,
+	  rowHeaders: true,
+	  colHeaders: true,
+	  filters: true,
+	  dropdownMenu: true
+	});
+	 
+
         <!-- START Main Content -->
         <div class="panel-body">
-
               <div class="row col-sm-12 border-clas">
                     <div class="heading-txt col-sm-2">
                         <span id="groupname">RA Patients</span>
@@ -37,7 +58,7 @@
                     <a  href="#myModal" data-toggle="modal" data-target="#myModal" id="updateGroup"  class="btn btn-primary potential-inner-btn updateGroup" disabled>Update Usergroup</a>
                     <a  class="btn btn-primary potential-inner-btn remove_selected_screener" >Remove Selected from Screener</a>
 
-                    <div  id="usergroup_participants_table" >
+                    <div  id="example" >
 
                     </div>
                 </div>                       

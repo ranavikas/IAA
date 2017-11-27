@@ -39,7 +39,7 @@
 					
                           <?php
                                     //form data
-                                    $attributes = array('class' => 'form-horizontal', 'id' => 'addeditstudy' , 'enctype' => 'multipart/form-data');
+                                    $attributes = array('class' => 'form-horizontal', 'id' => 'addeditstudy' , 'enctype' => 'multipart/form-data' ,'onkeypress'=> 'return event.keyCode != 13;');
 
                                     //form validation
                                     echo validation_errors();
@@ -52,8 +52,10 @@
                                       <div class="form-group ">
                                           <label for="gender" class="col-sm-4 control-label">Study No</label>
                                            <div class="col-sm-3"> 
-                                          <?php echo $study_number;?>
-                                          <input type="hidden" value="<?php echo $study_number;?>" name="study_number">
+                                         
+                                               <input type="text" class="form-control" value="<?php echo $study_number_manual; ?>" name="study_number_manual" id="study_number_manual" readonly> 
+                                            
+                                            <input type="hidden" value="<?php echo $study_number;?>" name="study_number" id="study_number">
                                            </div>
                                        </div>
                                          <div class="form-group ">
@@ -192,9 +194,10 @@
                                           <label for="focus_vision" class="col-sm-4 control-label">Focus Vision</label>
                                            <div class="col-sm-4"> 
                                           <select name="focus_vision" id="focus_vision" class="form-control">
+                                              <option value="" selected>Select Focus Vision</option>
                                             <?php 
                                             
-                                                $focus_rec = array('1'=>'Yes' , '0'=>'No');
+                                                $focus_rec = array('2'=>'Yes' , '1'=>'No');
                                                 foreach($focus_rec as $key=>$val) {
 
                                                      if ($key == $focus_vision)
@@ -214,6 +217,7 @@
                                           <label for="recruiter" class="col-sm-4 control-label">Recruiter</label>
                                            <div class="col-sm-6"> 
                                           <select name="recruiter" id="recruiter" class="form-control">
+                                               <option value="" selected>Select Recruiter </option>
                                             <?php         
                                                 foreach($recruiter_rec as $row) {
 
@@ -232,6 +236,7 @@
                                           <label for="gender" class="col-sm-4 control-label">Lead</label>
                                            <div class="col-sm-6"> 
                                           <select name="lead" id="lead" class="form-control">
+                                               <option value="" selected>Select Lead </option>
                                             <?php         
                                                 foreach($lead_rec as $row) {
 
@@ -250,6 +255,7 @@
                                           <label for="gender" class="col-sm-4 control-label">Datalogger</label>
                                            <div class="col-sm-6"> 
                                           <select name="datalogger" id="datalogger" class="form-control">
+                                                <option value="" selected>Select Datalogger </option>
                                             <?php         
                                                 foreach($datalogger_rec as $row) {
 
@@ -268,6 +274,7 @@
                                           <label for="av" class="col-sm-4 control-label">AV</label>
                                            <div class="col-sm-6"> 
                                           <select name="av" id="av" class="form-control">
+                                               <option value="" selected>Select AV </option>
                                             <?php         
                                                foreach($av_rec as $row) {
 
@@ -429,7 +436,7 @@
                                            
                                                     <div class="row">
                                                             <div class="form-group ">
-                                                                <label for="" class="col-sm-2 control-label">Total Participant</label>
+                                                                <label for="" class="col-sm-2 control-label">Total Participants</label>
                                                                  <div class="col-sm-1">
                                                                  </div>
                                                                 <div class="col-sm-1">
@@ -460,8 +467,9 @@
                                                     </div> 
                                                      <div class="row">
                                                           <div class="form-group ">
-                                                                <label for="focus_vision" class="col-sm-2 control-label">Location</label>
-                                                               <div class="col-sm-3"> 
+                                                                <label for="focus_vision" class="col-sm-2 control-label">Select Location</label>
+                                                               <div class="col-sm-3">
+                                                                  <input type="text" class="form-control" id="myInput1" onkeyup="myFunction1()" placeholder="Search.." title="Type in a name">                                 
                                                                   <div id="" style="overflow-y: scroll; height:200px; border:1px solid #ddd;">
                                                                         <table id="myTable1" class="table table-striped table-bordered" >
 
@@ -484,7 +492,7 @@
                                                             <div class="form-group ">
                                                                 <label for="focus_vision" class="col-sm-2 control-label">DNQ</label>
                                                                <div class="col-sm-3"> 
-                                                                   <textarea class="form-control" name="study_dnq_notes" placeholder="Textarea" rows="3"><?php echo $study_dnq_notes; ?></textarea>
+                                                                   <textarea class="form-control" name="study_dnq_notes" placeholder="Textarea" rows="12"><?php echo $study_dnq_notes; ?></textarea>
                                                                 </div>
                                                                
                                                                 <label for="focus_vision" class="col-sm-2 control-label">Select DNQ Studies</label>
@@ -638,6 +646,23 @@
          }       
        }
     }
+    function myFunction1() {
+       var input, filter, table, tr, td, i;
+       input = document.getElementById("myInput1");
+       filter = input.value.toUpperCase();
+       table = document.getElementById("myTable1");
+       tr = table.getElementsByTagName("tr");
+       for (i = 0; i < tr.length; i++) {
+         td = tr[i].getElementsByTagName("td")[0];
+         if (td) {
+           if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+             tr[i].style.display = "";
+           } else {
+             tr[i].style.display = "none";
+           }
+         }       
+       }
+    }
  $(document).ready(function() {
     var max_fields      = 10; //maximum input boxes allowed
     var wrapper         = $(".input_fields_wrap"); //Fields wrapper
@@ -709,8 +734,6 @@
              }
 
          });
-        
-        
        
 
         //get clint contact info

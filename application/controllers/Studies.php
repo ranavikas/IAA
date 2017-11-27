@@ -269,7 +269,7 @@ class Studies extends CI_Controller {
 
 	//load the view
         $data['main_content'] = 'studies/update_usergroup';
-        $this->load->view('includes/template_model', $data);  
+        $this->load->view('includes/template_without_footer', $data);  
 
     }//index
 	
@@ -361,13 +361,31 @@ class Studies extends CI_Controller {
         
         $user_id = $this->session->userdata('active_user_id');
        
-	//If save button was clicked, get the data sent via post
+		//If save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
            //form validation
+            
+            
+           $study_number_manual = $this->input->post('study_number_manual');
+           $study_number_manual_new = '';
+            if($study_number_manual == '')
+            {
+               $study_number_manual_new = $this->input->post('study_number_default');
+                
+                $this->form_validation->set_rules('study_number_default', 'Study Number', 'required|callback_check_studynumber[' . $this->input->post('study_number_default'). ']');
+         
+            }else{
+                $study_number_manual_new = $study_number_manual;
+                $this->form_validation->set_rules('study_number_manual', 'Study Number', 'required|callback_check_studynumber[' . $this->input->post('study_number_manual'). ']');
+               
+            }    
+            
+            
             $this->form_validation->set_rules('client_id', 'Client', 'required');
             $this->form_validation->set_rules('product_name', 'Product Name', 'required');
             
+             
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
             //if the form has passed through the validation
             if ($this->form_validation->run())
@@ -388,9 +406,9 @@ class Studies extends CI_Controller {
                             'start_date' => $this->input->post('start_date'),
                             'end_date' => $this->input->post('end_date'),
                             'study_number' => $this->input->post('study_number'),
+                            'study_number_manual' => $study_number_manual_new,
                             'study_dnq_notes' => $this->input->post('study_dnq_notes'),
                             'study_notes' => $this->input->post('study_notes'),
-                
                             'study_status' => $this->input->post('study_status'),
                             'focus_vision' => $this->input->post('focus_vision'),
                             'recruiter' => $this->input->post('recruiter'),
@@ -434,7 +452,7 @@ class Studies extends CI_Controller {
                 }
                 
                 //echo '<pre>';
-                //print_r($sessiontime);
+                //print_r($data_to_store);
                
                //if the insert has returned true then we show the flash message
                 $last_insert_id =  $this->Studies_model->store_record($data_to_store ,$product_name , $product_name_other , $product_type , $product_type_other ,$client_id ,$client_id_other, $study_group_array , $sessiontime , $locationarray , $dnq_studyarray);
@@ -498,6 +516,7 @@ class Studies extends CI_Controller {
 
                 $data['av'] = $record[0]['av'];
                 $data['study_number'] = $record[0]['study_number'];
+                $data['study_number_manual'] = $record[0]['study_number_manual'];
                 $data['study_notes'] = $record[0]['study_notes'];
                 $data['study_dnq_notes'] = $record[0]['study_dnq_notes'];
                 $data['client_contact_info'] = $record[0]['client_contact_info'];
@@ -530,6 +549,7 @@ class Studies extends CI_Controller {
 
                 $data['av'] = '';
                 $data['study_number'] = '';
+                $data['study_number_manual'] = '';
                 $data['study_notes'] = '';
                 $data['study_dnq_notes'] = '';
                 $data['client_contact_info'] = '';
@@ -548,6 +568,20 @@ class Studies extends CI_Controller {
 	//If save button was clicked, get the data sent via post    
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
+            
+            /*$study_number_manual = $this->input->post('study_number_manual');
+            $study_number_manual_new = '';
+            if($study_number_manual == '')
+            {
+               $study_number_manual_new = $this->input->post('study_number_default');
+                
+                $this->form_validation->set_rules('study_number_default', 'Study Number', 'required|callback_check_studynumber[' . $this->input->post('study_number_default'). ']');
+         
+            }else{
+                $study_number_manual_new = $study_number_manual;
+                $this->form_validation->set_rules('study_number_manual', 'Study Number', 'required|callback_check_studynumber[' . $this->input->post('study_number_manual'). ']');
+               
+            }  */ 
             
                 //form validation
             $this->form_validation->set_rules('client_id', 'Client', 'required');
@@ -573,6 +607,7 @@ class Studies extends CI_Controller {
                             'start_date' => $this->input->post('start_date'),
                             'end_date' => $this->input->post('end_date'),
                             'study_number' => $this->input->post('study_number'),
+                            'study_number_manual' => $this->input->post('study_number_manual'),
                             'study_dnq_notes' => $this->input->post('study_dnq_notes'),
                             'study_notes' => $this->input->post('study_notes'),
                 
@@ -635,6 +670,7 @@ class Studies extends CI_Controller {
             
         }
 
+        
             $data['clients_rec'] = $this->Studies_model->get_clients();
             $data['products_rec'] = $this->Studies_model->get_products();
             $data['products_type_rec'] = $this->Studies_model->get_products_type();
@@ -674,6 +710,7 @@ class Studies extends CI_Controller {
 
                 $data['av'] = $record[0]['av'];
                 $data['study_number'] = $record[0]['study_number'];
+                $data['study_number_manual'] = $record[0]['study_number_manual'];
                 $data['study_notes'] = $record[0]['study_notes'];
                 $data['study_dnq_notes'] = $record[0]['study_dnq_notes'];
                 $data['client_contact_info'] = $record[0]['client_contact_info'];
@@ -703,6 +740,7 @@ class Studies extends CI_Controller {
 
                 $data['av'] = '';
                 $data['study_number'] = '';
+                $data['study_number_manual'] = '';
                 $data['study_notes'] = '';
                 $data['study_dnq_notes'] = '';
                 $data['client_contact_info'] = '';
@@ -721,6 +759,8 @@ class Studies extends CI_Controller {
 	//If save button was clicked, get the data sent via post    
         if ($this->input->server('REQUEST_METHOD') === 'POST')
         {
+            
+              
             
                 //form validation
             $this->form_validation->set_rules('client_id', 'Client', 'required');
@@ -746,6 +786,7 @@ class Studies extends CI_Controller {
                             'start_date' => $this->input->post('start_date'),
                             'end_date' => $this->input->post('end_date'),
                             'study_number' => $this->input->post('study_number'),
+                            'study_number_manual' => $this->input->post('study_number_manual'),
                             'study_dnq_notes' => $this->input->post('study_dnq_notes'),
                             'study_notes' => $this->input->post('study_notes'),
                 
@@ -792,7 +833,9 @@ class Studies extends CI_Controller {
                 
                 //$this->Studies_model->update_record($study_id , $data_to_store ,$product_name , $product_name_other , $study_group_array , $sessiontime , $locationarray , $dnq_studyarray);
                   $res =  $this->Studies_model->update_autosave_record($study_id , $data_to_store ,$product_name , $product_name_other ,$product_type , $product_type_other ,$client_id ,$client_id_other, $study_group_array , $sessiontime , $locationarray , $dnq_studyarray);
-                  //echo '<pre>';
+                 // echo '<pre>';
+                 // echo 'dddd';
+                 // print_r($res);
                   $str = json_encode($res);
                   print_r($str);
                   die();
@@ -849,6 +892,7 @@ class Studies extends CI_Controller {
 
                 $data['av'] = $record[0]['av'];
                 $data['study_number'] = $record[0]['study_number'];
+                $data['study_number_manual'] = $record[0]['study_number_manual'];
                 $data['study_notes'] = $record[0]['study_notes'];
                 $data['study_dnq_notes'] = $record[0]['study_dnq_notes'];
                 $data['client_contact_info'] = $record[0]['client_contact_info'];
@@ -932,6 +976,31 @@ class Studies extends CI_Controller {
         $data['main_content'] = 'studies/userscheduled';
         $this->load->view('includes/template_potential', $data);   
     } 
+    
+    public function usergroup_demographic()
+    {
+ 
+        /*if ($this->input->server('REQUEST_METHOD') === 'POST')
+        {
+             
+            $post_data = $this->input->post();
+            
+            
+            $this->Studies_model->save_answer($post_data); 
+        } */   
+        
+        
+        $usergroup_id = $this->input->get('usergroupp');   
+        $data['usergroup_id'] = $usergroup_id;
+       
+        $data['study_participant_status'] = $this->Studies_model->get_study_participant_status(); 
+        $data['records'] = $this->Studies_model->get_usergroup_demographic($usergroup_id); 
+        $data['usergroup_demographic_question'] = $this->Studies_model->get_usergroup_deomgraphic_questions($usergroup_id); 
+  
+        $data['main_content'] = 'studies/userdemographic';
+        $this->load->view('includes/template_potential', $data);   
+    }
+    
     
      public function usergroup_dnq()
     {
@@ -1049,7 +1118,7 @@ class Studies extends CI_Controller {
      
         $data['records'] = $this->Studies_model->get_screene_questions(); 
         $data['main_content'] = 'studies/screner_question';
-        $this->load->view('includes/template_model', $data);   
+        $this->load->view('includes/template_without_footer', $data);   
     } 
  
     
@@ -1083,7 +1152,7 @@ class Studies extends CI_Controller {
      
         $data['records'] = $this->Studies_model->get_screene_questions_usergroup($data['onegroup']); 
         $data['main_content'] = 'studies/remove_screner_question';
-        $this->load->view('includes/template_model', $data);   
+        $this->load->view('includes/template_without_footer', $data);   
     } 
  
     
@@ -1241,5 +1310,60 @@ class Studies extends CI_Controller {
         //delete
         $this->Studies_model->delete_group_autosave_record($id);
     }
+    
+    
+    public function check_studynumber($study_number)
+    {
+        
+        $result = $this->Studies_model->study_number_exist($study_number);
+         if($result > 0){
+          $this->form_validation->set_message('check_studynumber', 'Study Number already exist.');
+          return false;  
+         }else{
+             return true;
+         }
+    } 
+	
+
+	
+	
+	/**********************************************************************
+    * Grabs content for HandsOnTable
+	* Called as Ajax request by HandsOnTable
+	* @study_id int
+    * @return json 
+	**********************************************************************/
+    public function populate_tracker_tab($study_id)
+	{
+		$data = $this->Studies_model->get_tracker($study_id);
+		
+		$result['cols'] = $data[0]['num_cols'];
+		$result['rows'] = $data[0]['num_rows'];
+		$result['cells'] = $data[0]['matrix_csv'];
+
+		echo json_encode($result);
+	}
+	
+	
+	/**********************************************************************
+    * Updates content for HandsOnTable
+	* Called as Ajax request by HandsOnTable
+	* @study_id int
+    * @return json 
+	**********************************************************************/
+    public function update_tracker_tab($study_id)
+	{
+		$matrix = str_replace('"', "", $_REQUEST['table']);
+		
+		$update = $this->Studies_model->update_tracker($study_id, $matrix);
+		
+		$result = array();
+		$result['response'] = 200;
+		$result['affected_rows'] = $update;
+
+		echo json_encode($result);
+	}
+	
+	
     
 }
